@@ -1,6 +1,7 @@
 import os
 import discord
 from flask import Flask
+import commands
 from dotenv import load_dotenv
 
 app = Flask(__name__)
@@ -21,7 +22,7 @@ async def on_message(message):
     user = message.author
 
     if message.content.startswith('!pstart'):
-        pass
+        commands.game(channel, user)
 
 @app.route("/")
 def main():
