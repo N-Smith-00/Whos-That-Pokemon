@@ -1,8 +1,9 @@
 import os
 import discord
+import asyncio
 from flask import Flask
-import commands
 from dotenv import load_dotenv
+import commands
 
 app = Flask(__name__)
 load_dotenv()
@@ -22,7 +23,11 @@ async def on_message(message):
     user = message.author
 
     if message.content.startswith('!pstart'):
-        commands.game(channel, user)
+        await channel.send('starting game')
+        await asyncio.sleep(0.5)
+        score = commands.game(client, channel, user)
+        await channel.send(f'Game over, your final score is {score}')
+        #check leaderboard
 
 @app.route("/")
 def main():
