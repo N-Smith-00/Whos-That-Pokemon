@@ -11,21 +11,21 @@ async def game(client, channel, user):
 
     # send pic of pokemon
     name = list(pokemon)[random.randrange(0, len(pokemon))]
-    with open('f{pokemon[name]}.png', 'rb') as fp:
-        await channel.send(discord.File(fp, 'pokemon.png'))
+    with open(f'pictures/{pokemon[name]}.png', 'rb') as fp:
+        await channel.send(file=discord.File(fp, 'pokemon.png'))
     # wait for response
     try:
+        def check(m):
+            return m.author == user and m.channel == channel
         msg = await client.wait_for('message', check=check, timeout=5.0)
-    except(TimeoutError):
+    except(asyncio.exceptions.TimeoutError):
         await channel.send('you have run out of time')
-        return 1
+        return 0
     # check answer
     if (msg.content != name):
         await channel.send(f'wrong answer, the correct answer is {name}')
-        return 1
+        return 0
     else:
         await channel.send('correct')
-        return (1 + game(client, channel, user))
-
-def check(m, user, channel):
-    return m.author == user and m.channel == channel
+        await asyncio.sleep(0.3)
+        return (1 + await game(client, channel, user))

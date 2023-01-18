@@ -25,7 +25,8 @@ async def on_message(message):
     if message.content.startswith('!pstart'):
         await channel.send('starting game')
         await asyncio.sleep(0.5)
-        score = commands.game(client, channel, user)
+        score = await commands.game(client, channel, user)
+        await asyncio.sleep(0.5)
         await channel.send(f'Game over, your final score is {score}')
         #check leaderboard
 
