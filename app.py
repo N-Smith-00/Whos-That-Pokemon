@@ -1,6 +1,7 @@
 import os
 import discord
 import asyncio
+import json
 from flask import Flask
 from dotenv import load_dotenv
 import commands
@@ -29,6 +30,7 @@ async def on_message(message):
         await asyncio.sleep(0.5)
         await channel.send(f'Game over, your final score is {score}')
         #check leaderboard
+
 
 @app.route("/")
 def main():
